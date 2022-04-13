@@ -1,6 +1,7 @@
 from dataclasses import dataclass
-from point import Point
 from typing import List
+
+from autocad.geometry import Point
 
 @dataclass
 class Text:
