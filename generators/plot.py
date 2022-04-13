@@ -1,8 +1,10 @@
-from old.ACAD import *
-from random import randint
-from helpers.space_points import space_points
 from dataclasses import dataclass
+from random import randint
 from typing import List
+
+from autocad.geometry import Point,Line,Polyline,Polygon
+from autocad.helpers import format_KP,avg_points,space_points
+from autocad.objects import Layer,Text
 
 def round_up(num,divisor): return num + divisor - (num%divisor)
 def round_down(num,divisor): return num - (num%divisor)
