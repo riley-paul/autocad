@@ -1,6 +1,7 @@
 from dataclasses import dataclass
 from typing import List
-import math
+
+from misc import avg_lines,join_lines
 
 from point import Point
 from line import Line
@@ -276,15 +277,15 @@ class Polyline:
     inter = [i for index,i in enumerate(inter) if not any((index >= j[0] and index < j[1]) for j in overlaps)]
     return Polyline(inter)
 
-  def buffer(self,dist):
-    p1 = self.offset(dist).vertices
-    p2 = self.offset(-dist).vertices
-    p2.reverse()
-    return Polygon(p1+p2)
+  # def buffer(self,dist):
+  #   p1 = self.offset(dist).vertices
+  #   p2 = self.offset(-dist).vertices
+  #   p2.reverse()
+  #   return Polygon(p1+p2)
 
-  def lin_divide(self,num_div):
-    alongs = np.linspace(0,self.length(),num_div)
-    return [self.along(i) for i in alongs]
+  # def lin_divide(self,num_div):
+  #   alongs = np.linspace(0,self.length(),num_div)
+  #   return [self.along(i) for i in alongs]
 
   def splice_KP(self,KP_beg,KP_end):
     pt_beg = self.from_KP(KP_beg,True)
@@ -316,17 +317,3 @@ class Polyline:
       command.append(f"_non {vertex.x},{vertex.y}")
     command.append("(SCRIPT-CANCEL)")
     return command
-
-  def KML_coords(self):
-    return [(i.x,i.y) for i in self.vertices]
-
-  def plot(self,axis,style="k",**kwargs):
-    axis.plot([i.x for i in self.vertices],[i.y for i in self.vertices],style,**kwargs)
-
-  def to_geo(self,proj=None,epsg=26910):
-    if not proj:
-      crs = CRS.from_epsg(epsg)
-      proj = Proj(crs)
-    coords = [proj(i.x,i.y,inverse=True) for i in self.vertices]
-    points = [Point(i[0],i[1]) for i in coords]
-    return Polyline(points)
