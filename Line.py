@@ -1,5 +1,5 @@
 from dataclasses import dataclass
-from Point import Point
+from point import Point
 import math
 
 @dataclass
