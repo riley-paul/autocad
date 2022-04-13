@@ -2,7 +2,7 @@ from autocad.point import Point
 from autocad.line import Line
 from autocad.polyline import Polyline
 from autocad.polygon import Polygon
-from acad_objects.page import Page
+from objects.page import Page
 from autocad.circle import Circle
-from acad_objects.text import Text
-from acad_objects.layer import Layer
+from objects.text import Text
+from objects.layer import Layer

@@ -2,8 +2,8 @@ from dataclasses import dataclass
 from typing import List
 import math
 
-from autocad.misc import avg_lines,join_lines
-from autocad.quadtree import QuadTree,find_boundary
+from geometry.helpers import avg_lines,join_lines
+from helpers.quadtree import QuadTree,find_boundary
 
 @dataclass
 class Point:

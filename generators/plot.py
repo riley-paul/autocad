@@ -1,6 +1,6 @@
 from old.ACAD import *
 from random import randint
-from space_points import space_points
+from helpers.space_points import space_points
 from dataclasses import dataclass
 from typing import List
 

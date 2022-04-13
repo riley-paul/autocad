@@ -7,7 +7,7 @@ from pyproj import Proj,CRS
 from dataclasses import dataclass
 from typing import List
 
-from quadtree import *
+from helpers.quadtree import *
 from polylabel import polylabel
 
 import matplotlib.pyplot as plt
