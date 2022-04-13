@@ -2,7 +2,7 @@ from dataclasses import dataclass
 import numpy as np
 import math
 
-from point import Point
+from autocad.point import Point
 
 @dataclass
 class Page:
