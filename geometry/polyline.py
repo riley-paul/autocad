@@ -1,7 +1,5 @@
-from autocad.geometry import Point
-from autocad.geometry import Line
-
-from autocad.helpers import QuadTree,find_boundary,avg_lines,join_lines
+from autocad.geometry import Point,Line
+from autocad.helpers import QuadTree,find_boundary
 
 from dataclasses import dataclass
 from typing import List
@@ -18,11 +16,6 @@ class Polyline:
     self.qtree = QuadTree(find_boundary(self.vertices))
     self.q_radius = max(i.length() for i in self.segments)
     for i in self.vertices: self.qtree.insert(i)
-    
-    if self.KPs:
-      # self.KPs = sorted(self.KPs,key=lambda i: i.label)
-      self.qtree_KP = QuadTree(find_boundary(self.KPs))
-      for i in self.KPs: self.qtree_KP.insert(i)
 
   def __repr__(self):
     points = [f"{i.x} {i.y}" for i in self.vertices]
@@ -117,6 +110,11 @@ class Polyline:
     d2 = self.pt_along(p2)
     return abs(d1 - d2)
 
+  def intersects_ln(self,other):
+    assert isinstance(other,Line)
+    intersections = [other.intersects(i) for i in self.segments]
+    return [i for i in intersections if i]
+
   def splice(self,p1,p2,radius=None):
     assert isinstance(p1,Point), "p1 not a point"
     assert isinstance(p2,Point), "p2 not a point"
@@ -147,6 +145,7 @@ class Polyline:
     return Polyline(vertices)
 
   def perp_angle(self,node):
+    from autocad.geometry import avg_lines
     if node in self.vertices:
       index = self.vertices.index(node)
       if node == self.vertices[0]: return self.segments[0].angle() + 90
@@ -167,6 +166,7 @@ class Polyline:
     return inter
   
   def offset_simple(self,dist):
+    from autocad.geometry import join_lines
     if dist == 0: return self
     offset_lines = [i.offset(dist) for i in self.segments]
     return join_lines(offset_lines)

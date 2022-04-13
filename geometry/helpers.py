@@ -1,7 +1,4 @@
-from autocad.geometry import Point
-from autocad.geometry import Line
-from autocad.geometry import Polyline
-from autocad.geometry import Polygon
+from autocad.geometry import Point,Line,Polyline,Polygon
 
 def avg_points(nodes):
   x = [i.x for i in nodes]
@@ -42,18 +39,3 @@ def center_rect(center:Point,angle:float,width:float,height:float) -> Polygon:
   l1 = Line(p1,p2).offset(width/2)
   l2 = Line(p1,p2).offset(-width/2).reverse()
   return Polygon([l1.p1,l1.p2,l2.p1,l2.p2])
-
-def print_to_file(fname,data):
-  """Print list to text file"""
-  with open(fname, "w", encoding="utf-16") as file:
-    for item in data:
-      file.write("%s\n" % item)
- 
-def format_KP(number,comma=False) -> str:
-  """Formats chainage number as '#+###' e.g. 34032.43 to 34+032"""
-  if type(number) == int or float:
-    post_plus = number % 1000
-    pre_plus = (number - post_plus)/1000
-    return f"{pre_plus:,.0f}+{post_plus:03.0f}" if comma else f"{pre_plus:.0f}+{post_plus:03.0f}"
-  else:
-    return number

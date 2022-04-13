@@ -10,6 +10,19 @@ class Point:
   def __repr__(self):
     return f"POINT({self.x:.3f} {self.y:.3f})"
 
+  def __key(self):
+    return (self.x, self.y)
+
+  def __hash__(self):
+    return hash(self.__key())
+
+  def __eq__(self,other):
+    if not isinstance(other,Point): return NotImplemented
+    precision = 5
+    c1 = round(self.x,precision) == round(other.x,precision)
+    c2 = round(self.y,precision) == round(other.y,precision)
+    return c1 and c2
+
   def move(self, dx=0, dy=0):
     self.x += dx
     self.y += dy
@@ -27,5 +40,8 @@ class Point:
     delta_y = self.y - node.y
     return math.sqrt(delta_x**2 + delta_y**2)
 
+  def nearest(self,nodes):
+    return min(nodes, key=lambda i: self.pt_to_pt(i))
+    
   def ACAD(self) -> List[str]:
     return [f"_.point _non {self.x},{self.y}"]

@@ -71,7 +71,7 @@ class Line:
     x = (B*(B*node.x - A*node.y) - A*C) / (A**2 + B**2)
     y = (A*(-B*node.x + A*node.y) - B*C) / (A**2 + B**2)
     
-    return Point(x,y,node.z) 
+    return Point(x,y) 
 
   def along(self,dt):
     """Returns the coordinates of a point a certain distance along the length of the line"""
@@ -114,10 +114,9 @@ class Line:
 
     return Point(Px,Py)
 
-  # def intersects_pl(self,other):
-  #   assert isinstance(other,Polyline) or isinstance(other,Polygon), "Other must be a polyline"
-  #   intersections = [self.intersects(i) for i in other.segments]
-  #   return [i for i in intersections if i]
+  def intersects_pl(self,other):
+    intersections = [self.intersects(i) for i in other.segments]
+    return [i for i in intersections if i]
 
   def offset(self,dist):
     angle = self.angle() + 90

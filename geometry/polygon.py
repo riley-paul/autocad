@@ -1,7 +1,6 @@
-from autocad.geometry import Point
-from autocad.geometry import Line
+from autocad.geometry import Point,Line
 
-from autocad.helpers import QuadTree,find_boundary,join_lines
+from autocad.helpers import QuadTree,find_boundary
 
 from dataclasses import dataclass
 from typing import List
@@ -93,6 +92,7 @@ class Polygon:
     return command
 
   def offset(self,dist):
+    from autocad.geometry import join_lines
     lines = [i.offset(dist) for i in self.segments]
     joined = Polygon(join_lines(lines).vertices)
     return joined
