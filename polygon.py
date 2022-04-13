@@ -33,10 +33,10 @@ class Polygon:
       j = i
     return abs(area)/2
 
-  def vis_center(self):
-    x,y = polylabel([[[pt.x,pt.y] for pt in self.vertices]])
-    self.vis_pt = Point(x,y,label=self.label)
-    return self.vis_pt
+  # def vis_center(self):
+  #   x,y = polylabel([[[pt.x,pt.y] for pt in self.vertices]])
+  #   self.vis_pt = Point(x,y,label=self.label)
+  #   return self.vis_pt
 
   def within(self,node) -> bool:
     outside = Point(min(i.x for i in self.vertices),min(i.y for i in self.vertices)).copy(-10,-10)
