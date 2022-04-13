@@ -1,7 +1,7 @@
-from autocad.point import Point
-from autocad.line import Line
-from autocad.polyline import Polyline
-from autocad.polygon import Polygon
+from autocad.geometry import Point
+from autocad.geometry import Line
+from autocad.geometry import Polyline
+from autocad.geometry import Polygon
 
 def avg_points(nodes):
   x = [i.x for i in nodes]
