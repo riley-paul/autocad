@@ -28,8 +28,8 @@ class Plot:
     y_lab: str = "ELEVATION"
     p_lab: str = "TITLE"
     just: str = "MC" # [T,M,B] [L,C,R]
-    PS_y_div: int = 5
-    PS_x_div: int = 50
+    y_div: int = 5
+    x_div: int = 50
 
     def __post_init__(self):
         PS_text_height = 1.8
@@ -37,8 +37,6 @@ class Plot:
         PS_over = 1
 
         self.text_height = PS_text_height/self.scale
-        self.y_div = round(self.PS_y_div/self.scale,0)
-        self.x_div = round(self.PS_x_div/self.scale,0)
         self.over = PS_over/self.scale
         
         self.ranges = []
@@ -162,7 +160,7 @@ class Plot:
 
         # Create axis labels
         if self.x_lab:
-            pos = self.origin.copy(self.x_ext/2,-(self.over*2+self.text_height+self.over)-self.range_height*len(self.ranges))
+            pos = self.origin.copy(self.x_ext/2,-(self.over*3+self.text_height+self.over)-self.range_height*len(self.ranges))
             command += lay_label.ACAD()
             command += Text(self.x_lab,position=pos,height=self.text_height/1.2,just = "TC").ACAD()
 
