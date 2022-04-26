@@ -3,6 +3,7 @@ import numpy as np
 import math
 
 from autocad.geometry import Point
+from autocad.helpers import import_WKT
 
 @dataclass
 class Page:
@@ -29,28 +30,30 @@ class Page:
     P2 = T @ P1
     return Point(P2[0][0],P2[1][0])
 
-# def import_pages(data):
-#   pages = []
-#   for _,row in data.iterrows():
-#     origin = import_WKT(row["ORIGIN"])
-#     shape = import_WKT(row["GEOMETRY"])
-#     shape_vp = import_WKT(row["GEOMETRY_VP"])
+  def select(self):
+    return [f"_.-LAYOUT S \"{self.name}\""]
 
-#     page = Page(
-#       name = row["NAME"],
-#       angle = row["ANGLE"],
-#       scale = row["SCALE"],
-#       origin = origin,
-#       x_offset = shape_vp[0].vertices[0].x,
-#       y_offset = shape_vp[0].vertices[0].y,
-#     )
+def import_pages(data):
+  pages = []
+  for _,row in data.iterrows():
+    origin = import_WKT(row["origin"])
+    shape = import_WKT(row["geometry"])
+    shape_vp = import_WKT(row["geometry_vp"])
+
+    page = Page(
+      name = row["name"],
+      angle = row["angle"],
+      scale = row["scale"],
+      origin = origin,
+      x_offset = shape_vp[0].vertices[0].x,
+      y_offset = shape_vp[0].vertices[0].y,
+    )
     
-#     page.KP_beg = row["KP_beg"]
-#     page.KP_end = row["KP_end"]
-#     page.shape = shape
-#     page.shape_vp = shape_vp[0]
-#     page.section = row["SECTION"]
+    page.KP_beg = row["KP_beg"]
+    page.KP_end = row["KP_end"]
+    page.shape = shape
+    page.shape_vp = shape_vp[0]
 
-#     pages.append(page)
+    pages.append(page)
 
-#   return pages
+  return pages

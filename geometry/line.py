@@ -129,4 +129,4 @@ class Line:
     return arr[val % 16]
     
   def ACAD(self):
-    return [f"_.line _non {self.p1.x},{self.p1.y} _non {self.p2.x},{self.p2.y}\n"]
+    return [f"_.LINE _NON {self.p1.x},{self.p1.y} _NON {self.p2.x},{self.p2.y}\n"]

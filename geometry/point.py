@@ -23,6 +23,9 @@ class Point:
     c2 = round(self.y,precision) == round(other.y,precision)
     return c1 and c2
 
+  def comm(self):
+    return f"{self.x},{self.y}"
+
   def move(self, dx=0, dy=0):
     self.x += dx
     self.y += dy
@@ -44,4 +47,4 @@ class Point:
     return min(nodes, key=lambda i: self.pt_to_pt(i))
     
   def ACAD(self) -> List[str]:
-    return [f"_.point _non {self.x},{self.y}"]
+    return [f"_.POINT _NON {self.x},{self.y}"]

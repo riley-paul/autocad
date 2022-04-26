@@ -19,7 +19,7 @@ class Polygon:
     for i in self.vertices: self.qtree.insert(i)
 
   def __repr__(self):
-    points = [f"{i.x} {i.y} {i.z}" for i in self.vertices]
+    points = [f"{i.x} {i.y}" for i in self.vertices]
     return f"POLYGON(({', '.join(points)}))"
 
   def area(self) -> float:

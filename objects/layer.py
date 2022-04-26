@@ -16,7 +16,7 @@ class Layer:
   def ACAD(self) -> List[str]:
     """Produces a list of commands to create a layer in AutoCAD"""
     command = []
-    command.append("-LAYER")
+    command.append("_.-LAYER")
     command.append(f"M \"{self.name}\"")
     if self.colour: 
       try:
