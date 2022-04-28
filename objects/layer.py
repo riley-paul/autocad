@@ -46,3 +46,6 @@ class Layer:
   
   def to_back(self) -> List[str]:
     return [f"(ssget \"X\" '((8 . \"{self.name}\")))\nDRAWORDER P\n\nB"]
+
+  def delete(self):
+    return self.ACAD() + Layer("0").ACAD() + [f"_.-LAYDEL N {self.name}","","Y"]

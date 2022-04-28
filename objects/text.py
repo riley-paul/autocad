@@ -14,6 +14,9 @@ class Text:
   rot: float = None
   lspace: float = None
 
+  def __post_init__(self):
+    self.name = self.name.replace("\n"," ")
+
   def ACAD(self) -> List[str]:
     command = f"_.-mtext _non {self.position.x},{self.position.y}"
     command += f" J {self.just}" if self.just else ""

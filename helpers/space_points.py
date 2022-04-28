@@ -1,20 +1,19 @@
-def space_points(points,spacing):
+def space_points(points,spacing,iterations=5):
     """Function to intelligently space out a list of points 
     such that they are as close to their original positions 
     as possible while maintaining a certain buffer from one
-    another"""
+    another
+    
+    These points are on a linear scale
+    """
 
     def space(group,spacing):
         """Function to evenly space points around the
         centroid of the original group"""
-        center = sum(group)/len(group)
-        width = (len(group)-1)*spacing
-        beg = center - width/2
-        new_pts = []
-        for i,_ in enumerate(group):
-            new_pt = beg + i*spacing
-            new_pts.append(new_pt)
-        return new_pts
+        center = sum(group) / len(group) # determine center of group
+        final_width = (len(group)-1) * spacing
+        beg = center - final_width/2
+        return [beg + i * spacing for i in range(len(group))]
 
     def clump(points,spacing):
         """Function to group points together based on 
@@ -33,7 +32,7 @@ def space_points(points,spacing):
         clumped_groups.append(cand)
         return clumped_groups
 
-    for _ in range(5):
+    for _ in range(iterations):
         clumps = clump(points,spacing)
         result = []
         for item in clumps:
@@ -41,7 +40,7 @@ def space_points(points,spacing):
         points = result
     return result
 
-def space_ranges(ranges,spacing,sort_by,extents=None):
+def space_ranges(ranges,spacing,sort_by):
     """ sort_by = 0 for smallest
         sort_by = 1 for largest
         sort_by = 2 for center """ 
