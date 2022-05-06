@@ -23,6 +23,11 @@ class Point:
     c2 = round(self.y,precision) == round(other.y,precision)
     return c1 and c2
 
+  def get_coords(self):
+    return [(self.x,self.y)]
+
+  coords = property(get_coords)
+
   def comm(self):
     return f"{self.x},{self.y}"
 
