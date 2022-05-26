@@ -1,10 +1,10 @@
 from dataclasses import dataclass
-from typing import List
+import typing
 
 @dataclass
 class Layer:
   name: str
-  colour: any = None
+  colour: typing.Union[typing.List,str,int] = None
   ltype: str = None
   lweight: str = None
 
@@ -13,7 +13,7 @@ class Layer:
     for i in bad_characters:
       self.name = self.name.replace(i,"_")
 
-  def ACAD(self) -> List[str]:
+  def ACAD(self) -> typing.List[str]:
     """Produces a list of commands to create a layer in AutoCAD"""
     command = []
     command.append("_.-LAYER")
@@ -32,6 +32,10 @@ class Layer:
             command.append(f"C {self.colour} \"{self.name}\"")
           else:
             command.append(f"C T {self.colour} \"{self.name}\"")
+
+        if type(self.colour) == list:
+          colour = ','.join([str(int(i)) for i in self.colour])
+          command.append(f"C T {colour} \"{self.name}\"")
       
       except Exception as e:
         print(e)
@@ -41,10 +45,10 @@ class Layer:
     command.append("(SCRIPT-CANCEL)") 
     return command
 
-  def to_front(self) -> List[str]:
+  def to_front(self) -> typing.List[str]:
     return [f"(ssget \"X\" '((8 . \"{self.name}\")))\nDRAWORDER P\n\nF"]
   
-  def to_back(self) -> List[str]:
+  def to_back(self) -> typing.List[str]:
     return [f"(ssget \"X\" '((8 . \"{self.name}\")))\nDRAWORDER P\n\nB"]
 
   def delete(self):
