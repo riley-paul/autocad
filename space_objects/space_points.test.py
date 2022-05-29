@@ -13,7 +13,7 @@ data["color"] = [[random() for _ in range(3)] for _ in range(len(data))]
 print(data)
 
 ## PLOT ##
-fig,(ax1,ax2) = plt.subplots(2)
+fig,(ax1,ax2) = plt.subplots(2,sharex=True)
 
 def plot_value(value,ax,color = [0,0,255]):
   ax.plot([value],[0],"o",color=color)
