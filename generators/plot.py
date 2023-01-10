@@ -37,7 +37,10 @@ class Plot:
   PS_y_div: int = 5
   PS_x_div: int = 50
 
-  x_lab: str = "SSEID 05.24.7 CL"
+  x_mid = None
+  y_mid = None
+
+  x_lab: str = "SSEID 05.24.14 CL"
   y_lab: str = "ELEVATION"
   p_lab: str = "TITLE"
   is_KP: bool = True
@@ -72,8 +75,13 @@ class Plot:
         self.x_max = self.x_min + self.x_ext
 
       elif self.just[-1] == "C":
-        self.x_min = round(pt_avg.x - self.x_ext/2,-1)
-        self.x_max = round(pt_avg.x + self.x_ext/2,-1)
+        if self.x_mid:
+          self.x_min = round(self.x_mid - self.x_ext/2,-1)
+          self.x_max = round(self.x_mid + self.x_ext/2,-1)
+
+        else:
+          self.x_min = round(pt_avg.x - self.x_ext/2,-1)
+          self.x_max = round(pt_avg.x + self.x_ext/2,-1)
 
       elif self.just[-1] == "R":
         self.x_max = x_max_div
@@ -90,8 +98,13 @@ class Plot:
         self.y_min = self.y_max - self.y_ext
         
       elif self.just[0] == "M":
-        self.y_min = round(pt_avg.y - self.y_ext/2,-1)
-        self.y_max = round(pt_avg.y + self.y_ext/2,-1)
+        if self.y_mid:
+          self.y_min = round(self.y_mid - self.y_ext/2,-1)
+          self.y_max = round(self.y_mid + self.y_ext/2,-1)
+
+        else:
+          self.y_min = round(pt_avg.y - self.y_ext/2,-1)
+          self.y_max = round(pt_avg.y + self.y_ext/2,-1)
 
       if self.just[0] == "B":
         self.y_min = y_min_div
@@ -207,7 +220,8 @@ class Plot:
     data = self.data[self.data[self.col_x].between(self.x_min + inset, self.x_max - inset)]
 
     for y,colour in zip(self.col_y,self.colours):
-      points = data.apply(lambda r: self.transform(r[self.col_x],r[y]),axis=1)
+      cleaned = data.dropna(subset=[self.col_x,y])
+      points = cleaned.apply(lambda r: self.transform(r[self.col_x],r[y]),axis=1)
       pl = Polyline(points.tolist())
 
       command += Layer(f"PLOT - PL - {y}",colour=colour,lweight=0.35).ACAD()
