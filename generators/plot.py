@@ -37,8 +37,8 @@ class Plot:
   PS_y_div: int = 5
   PS_x_div: int = 50
 
-  x_mid = None
-  y_mid = None
+  y_mid: float = None
+  x_mid: float = None
 
   x_lab: str = "SSEID 05.24.14 CL"
   y_lab: str = "ELEVATION"
