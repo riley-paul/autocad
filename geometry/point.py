@@ -2,54 +2,56 @@ from dataclasses import dataclass
 from typing import List
 import math
 
+
 @dataclass
 class Point:
-  x: float
-  y: float
+    x: float
+    y: float
 
-  def __repr__(self):
-    return f"POINT({self.x:.3f} {self.y:.3f})"
+    def __repr__(self):
+        return f"POINT({self.x:.3f} {self.y:.3f})"
 
-  def __key(self):
-    return (self.x, self.y)
+    def __key(self):
+        return (self.x, self.y)
 
-  def __hash__(self):
-    return hash(self.__key())
+    def __hash__(self):
+        return hash(self.__key())
 
-  def __eq__(self,other):
-    if not isinstance(other,Point): return NotImplemented
-    precision = 5
-    c1 = round(self.x,precision) == round(other.x,precision)
-    c2 = round(self.y,precision) == round(other.y,precision)
-    return c1 and c2
+    def __eq__(self, other):
+        if not isinstance(other, Point):
+            return NotImplemented
+        precision = 5
+        c1 = round(self.x, precision) == round(other.x, precision)
+        c2 = round(self.y, precision) == round(other.y, precision)
+        return c1 and c2
 
-  def get_coords(self):
-    return [(self.x,self.y)]
+    def get_coords(self):
+        return [(self.x, self.y)]
 
-  coords = property(get_coords)
+    coords = property(get_coords)
 
-  def comm(self):
-    return f"{self.x},{self.y}"
+    def comm(self):
+        return f"{self.x},{self.y}"
 
-  def move(self, dx=0, dy=0):
-    self.x += dx
-    self.y += dy
+    def move(self, dx=0, dy=0):
+        self.x += dx
+        self.y += dy
 
-  def copy(self, dx=0, dy=0):
-    return Point(self.x + dx, self.y + dy)
+    def copy(self, dx=0, dy=0):
+        return Point(self.x + dx, self.y + dy)
 
-  def copy_polar(self,d,theta):
-    dx = d*math.cos(math.radians(theta))
-    dy = d*math.sin(math.radians(theta))
-    return Point(self.x + dx, self.y + dy)
+    def copy_polar(self, d, theta):
+        dx = d * math.cos(math.radians(theta))
+        dy = d * math.sin(math.radians(theta))
+        return Point(self.x + dx, self.y + dy)
 
-  def pt_to_pt(self, node) -> float:
-    delta_x = self.x - node.x
-    delta_y = self.y - node.y
-    return math.sqrt(delta_x**2 + delta_y**2)
+    def pt_to_pt(self, node) -> float:
+        delta_x = self.x - node.x
+        delta_y = self.y - node.y
+        return math.sqrt(delta_x**2 + delta_y**2)
 
-  def nearest(self,nodes):
-    return min(nodes, key=lambda i: self.pt_to_pt(i))
-    
-  def ACAD(self) -> List[str]:
-    return [f"_.POINT _NON {self.x},{self.y}"]
+    def nearest(self, nodes):
+        return min(nodes, key=lambda i: self.pt_to_pt(i))
+
+    def ACAD(self) -> List[str]:
+        return [f"_.POINT _NON {self.x},{self.y}"]

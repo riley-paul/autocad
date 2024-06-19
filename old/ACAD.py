@@ -998,9 +998,11 @@ def import_WKT(text):
         result = text[text.index("(") + 1 : text.index(")")].split(", ")
         coords = [i.strip().split(" ") for i in result]
         points = [
-            Point(float(i[0]), float(i[1]))
-            if len(i) == 2
-            else Point(float(i[0]), float(i[1]), float(i[2]))
+            (
+                Point(float(i[0]), float(i[1]))
+                if len(i) == 2
+                else Point(float(i[0]), float(i[1]), float(i[2]))
+            )
             for i in coords
         ]
         return Polyline(vertices=points)
